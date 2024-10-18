@@ -47,7 +47,7 @@ runs:
       with:
         registry: ${{ inputs.registry }}
         username: ${{ github.actor }}
-        password: ${{ secrets.registry-pat }}
+        password: ${{ inputs.registry-pat }}
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta
