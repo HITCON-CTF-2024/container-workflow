@@ -2,6 +2,10 @@
 name: build base Container Image CI
 
 on:
+  push:
+    branches:
+      - '**'  # Run on any branch
+
   workflow_call:
     inputs:
       registry:
@@ -67,14 +71,20 @@ jobs:
             type=ref,event=branch
             type=raw,value=latest
 
-      - name: Build and push app image
+      - name: Build app image
         uses: docker/build-push-action@v5
         with:
           context: ${{ inputs.context }}
           platforms: linux/amd64
-          push: true
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: >
             type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}
           cache-to: type=inline
+
+      - name: Push the app image
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v5
+        with:
+          push: true
