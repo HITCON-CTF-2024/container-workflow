@@ -6,26 +6,20 @@ description: build base Container Image CI
 inputs:
   registry:
     required: false
-    type: string
     default: ghcr.io
     description: "registry's remote url, default: ghcr.io"
   registry-path:
     required: true
-    type: string
     description: "registry's path, eg. efficacy38/tailscale-derp"
   cache-from:
     required: false
-    type: string
     description: >
       cache registry's path, eg. efficacy38/tailscale-derp. if not
       specified, it would be the registry-path
   context:
     required: true
-    type: string
     description: |
       build context, which directory the dockerfile locate, e.g.: `.`
-
-secrets:
   registry-pat:
     required: true
     description: "registry's PAT, default: secrets.GITHUB_TOKEN"
@@ -37,6 +31,7 @@ runs:
   # packages: write
   steps:
     - name: Setup environment variables
+      shell: bash
       run: >
         echo "REGISTRY_CACHE=${{ github.event.inputs.registry-cache ||
         github.event.inputs.registry }}" >> $GITHUB_ENV
