@@ -75,4 +75,11 @@ runs:
       if: github.ref == 'refs/heads/main'
       uses: docker/build-push-action@v5
       with:
+        context: ${{ inputs.context }}
+        platforms: linux/amd64
         push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: >
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}
+        cache-to: type=inline
