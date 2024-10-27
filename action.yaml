@@ -68,8 +68,9 @@ runs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: >
-          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}
-        cache-to: type=inline
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache
+        cache-to: >
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache,max
 
     - name: Push the app image
       if: github.ref == 'refs/heads/main'
@@ -81,5 +82,6 @@ runs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: >
-          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}
-        cache-to: type=inline
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache
+        cache-to: >
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache,max
