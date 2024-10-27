@@ -84,4 +84,4 @@ runs:
         cache-from: >
           type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache
         cache-to: >
-          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache,max
+          type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache,mode=max
