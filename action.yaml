@@ -73,7 +73,7 @@ runs:
           type=registry,ref=${{ inputs.registry }}/${{ inputs.registry-path }}:buildcache,mode=max
 
     - name: Push the app image
-      if: github.ref == 'refs/heads/main'
+      if: (github.ref == 'refs/heads/main') || (github.ref == 'refs/heads/production')
       uses: docker/build-push-action@v5
       with:
         context: ${{ inputs.context }}
